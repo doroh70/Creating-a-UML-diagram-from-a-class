@@ -1,0 +1,61 @@
+public void getUML(){
+        String className = this.getClass().getSimpleName();
+        Field[] fields = this.getClass().getDeclaredFields();
+        Method[] methods = this.getClass().getDeclaredMethods();
+        
+        System.out.println("Class name is: \n"+ className + "\n");
+        
+        System.out.println("Class fields are: ");
+        for(int i = 0; i<fields.length; i++){
+            String fieldss = fields[i].toString();
+            String field[] = fieldss.split("\\.");
+            System.out.print(this.getAccessMod(field[0]));
+            
+            System.out.print(field[1] +" : ");
+            System.out.println(this.getParamterType(field[0]));
+            //System.out.println();
+        }
+        System.out.println("");
+        System.out.println("Class methods are: ");
+        for(int i = 0; i<methods.length; i++){
+            
+            String methodss = methods[i].toString();
+            
+            if(methodss.equals("public static void " + className + ".main(java.lang.String[])")){
+                continue;
+            }
+            if(methodss.equals("public void " + className + ".getUML()")){
+                continue;
+            }
+            if(methodss.equals("public char " + className + ".getAccessMod(java.lang.String)")){
+                continue;
+            }
+            if(methodss.equals("public java.lang.String " + className + ".getParamterType(java.lang.String)")){
+                continue;
+            }
+            else{
+                String[] methodl = methodss.split("\\.");
+                System.out.print(this.getAccessMod(methodl[0]));
+                System.out.print(methodl[1] + " : ");
+                System.out.println(this.getParamterType(methodl[0]));
+            }
+            //System.out.println();
+            
+        }
+        
+    }
+    
+    public char getAccessMod(String var){
+        String[] arr = var.split(" ");
+        if(arr[0].equals("public")){
+            return '+';
+        }
+        else{
+            return '-';
+        }
+    }
+    
+    public String getParamterType(String var){
+        String[] arr = var.split(" ");
+        return arr[1];
+    }
